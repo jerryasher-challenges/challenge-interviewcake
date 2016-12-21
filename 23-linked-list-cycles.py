@@ -51,21 +51,12 @@ def contains_cycle(node):
     # eventually the fast ptr catches up to the slow ptr and we found a
     # cycle, again proportional to n time.
 
-    # otoh, why not just put each node into a hash, and again, either
-    # we come to an end of the list naturally, or we find a node in
-    # the hash and this gives us the cycle. While space inefficient,
-    # this would tell us exactly where the loop is and provide better
-    # options to fix the loop
-
     slow = node
-    toggle = True
-    while node.next:
+    while node.next and node.next.next:
         # print("%s: %s->%s" % (n, node.value, node.next))
-        toggle = not toggle
-        if toggle:
-            slow = slow.next
-        node = node.next
-        if node == slow:
+        slow = slow.next
+        node = node.next.next
+        if node is slow:
             return True
     return False
 
