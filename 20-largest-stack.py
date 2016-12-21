@@ -51,8 +51,22 @@ class Stack:
 
 class MaxStack(Stack):
 
-    def get_max(self):
-        if self.items.peek():
+    def get_max_bad_bad_bad(self):
+        """simple, but works by peeking into super's internal data"""
+        # a more sophisticated design might keep track of the max
+        # value separately and not requiring spying into the super's
+        # abstraction.
+
+        # that would be better oop, less likely to break in the
+        # future, but likely slower to run, harder to implement and
+        # test,
+
+        # it's easy to keep track of the max separately by writing our
+        # own push and pop that reference super, IF all values in the
+        # stack are unique. otherwise duplicate entries of the max
+        # value makes the actual max value harder to maintain
+
+        if self.peek():
             return max(self.items)
 
 
@@ -61,38 +75,48 @@ class MaxStack(Stack):
 
 class TestMaxStack(unittest.TestCase):
 
-    def setUp(self):
-        self.q = Queue()
+    def test_MaxStack0Empty(self):
+        """test an empty stack"""
+        ms = MaxStack()
+        self.assertEqual(None, ms.get_max_bad_bad_bad())
 
-    def test_queuedequue(self):
-        """queue up 5 integers, check they are in there, dequeue them, check for emptiness, perform other blackbox and whitebox tests"""
-        self.assertTrue(self.q.is_empty())
-        self.assertTrue(self.q.q.is_empty())
-        self.assertTrue(self.q.b.is_empty())
+    def test_MaxStack1Filled(self):
+        """test a stack with a bunch of nums"""
+        ms = MaxStack()
+        for i in range(4):
+            ms.push(i)
+        ms.push(100)
+        for i in range(5, 10):
+            ms.push(i)
 
-        l = range(5)
-        for i in l:
-            self.q.enqueue(i)
+        self.assertEqual(100, ms.get_max_bad_bad_bad())
 
-        self.assertEqual(4, self.q.peek())
-        self.assertEqual(l, self.q.q.stk)
+    def test_MaxStack2MultipleMaxes(self):
+        """test a stack with a multiple occurrences of the same max num"""
+        ms = MaxStack()
+        for i in range(4):
+            ms.push(i)
+        ms.push(100)
+        for i in range(5, 10):
+            ms.push(i)
+        ms.push(110)
+        ms.push(100)
 
-        s = []
-        l.reverse()
-        for i in l:
-            elt = self.q.dequeue()
-            s.append(elt)
-
-        self.assertTrue(self.q.is_empty())
-        self.assertTrue(self.q.q.is_empty())
-        self.assertTrue(self.q.b.is_empty())
-
-        l.reverse()
-        self.assertEqual(s, l)
-        self.assertEqual([], self.q.b.stk)
-        self.assertEqual([], self.q.q.stk)
+        self.assertEqual(110, ms.get_max_bad_bad_bad())
+        ms.pop()
+        self.assertEqual(110, ms.get_max_bad_bad_bad())
+        ms.pop()
+        self.assertEqual(100, ms.get_max_bad_bad_bad())
+        ms.pop()
+        ms.pop()
+        ms.pop()
+        ms.pop()
+        ms.pop()
+        self.assertEqual(100, ms.get_max_bad_bad_bad())
+        ms.pop()
+        self.assertEqual(3, ms.get_max_bad_bad_bad())
 
 if __name__ == "__main__":
     # unittest.main()
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestQueueTwoStacks)
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestMaxStack)
     unittest.TextTestRunner(verbosity=2).run(suite)
