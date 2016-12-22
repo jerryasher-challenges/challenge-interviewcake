@@ -27,18 +27,18 @@ import unittest
 def reverse_bytes_in_place(l):
     """reverse the list in place"""
 
-    # n = len(l)
-    # for i in range(n / 2):
-    #     (l[i], l[n - i - 1]) = (l[n - i - 1], l[i])
+    n = len(l)
+    for i in range(n / 2):
+        (l[i], l[n - i - 1]) = (l[n - i - 1], l[i])
 
     # I like my solution that uses these in place, no need for a
     # temp val swap but at hacker news, someone says the "correct"
     # way is, and I think they are right, to use extended slices
     # as:
 
-    return l[::-1]
+    # return l[::-1]
 
-    # return l
+    return l
 
 
 def string_reverse(string):
