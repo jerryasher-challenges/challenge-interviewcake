@@ -1,6 +1,10 @@
 #!python
 
-# interviewcake 3, highest product of 3
+from __future__ import print_function
+import unittest
+
+######################################################################
+# this problem is from
 # https://www.interviewcake.com/question/highest-product-of-3
 
 # Given a list_of_ints, find the highest_product you can get from three of
@@ -9,10 +13,15 @@
 # The input list_of_ints will always have at least three integers.
 
 
-# "correct answer for this problem", reduce logic complexity by trying
-# all answers, letting some fail, determining correct answer in last comparison
-
 def highest_product0(list_of_ints):
+    """two neg nums may be bigger than three pos nums. do both products. return max"""
+
+    # I think this is the correct approach for this problem, it reduces
+    # logic complexity by trying both of the possible answers, determining
+    # the actual max in its last comparison
+
+    # it is presumably o(n log n) with one sort
+
     list_of_ints.sort()
     min0 = list_of_ints[0]
     min1 = list_of_ints[1]
@@ -30,6 +39,12 @@ def highest_product0(list_of_ints):
 # first approach, correct and better than brute force, but way too
 # many comparisons (ie complex logic)
 def highest_product1(list_of_ints):
+    """return the highest product, use logic to figure out which three operands to use"""
+
+    # this has two sorts, both are of sublists
+    # this works, is correct, but logic is a bit complex
+    # probably simpler mainteance with highest_product0
+
     neg = []
     pos = []
     for int in list_of_ints:
@@ -56,55 +71,25 @@ def highest_product1(list_of_ints):
         return pos[-3] * pos[-2] * pos[-1]
 
 
-l = [1, 2, 3]
-print(l)
-print(highest_product0(l))
-print(highest_product1(l))
-print()
+class TestHighestProduct(unittest.TestCase):
 
-l = [-1, 0, 1]
-print(l)
-print(highest_product0(l))
-print(highest_product1(l))
-print()
+    def test_highestproduct(self):
+        """test both highest_product strategies, make sure they are equal to each other"""
+        print("")
+        for t in [
+                [1, 2, 3],
+                [-1, 0, 1],
+                [-3, -4, 2],
+                [0, 1, 2, 3, 4, 5],
+                [-1, 0, 1, 2, 3, 4],
+                [-3, -4, 0, 1, 2, 3, 4],
+                [1, 2, 3, -3, -4, 0, 4],
+                [-1, -2, -3, 0, 1, 2, 30, 1, 2, -4, -5, 3],
+                [-10, -10, 1, 3, 2]]:
+            print("highest product of %s is %s" % (t, highest_product1(t)))
+            self.assertEqual(highest_product0(t), highest_product1(t))
 
-
-l = [-3, -4, 2]
-print(highest_product0(l))
-print(highest_product1(l))
-print()
-
-
-l = [0, 1, 2, 3, 4, 5]
-print(l)
-print(highest_product0(l))
-print(highest_product1(l))
-print()
-
-l = [-1, 0, 1, 2, 3, 4]
-print(highest_product0(l))
-print(highest_product1(l))
-print()
-
-l = [-3, -4, 0, 1, 2, 3, 4]
-print(l)
-print(highest_product0(l))
-print(highest_product1(l))
-print()
-
-l = [1, 2, 3, -3, -4, 0, 4]
-print(highest_product0(l))
-print(highest_product1(l))
-print()
-
-l = [-1, -2, -3, 0, 1, 2, 30, 1, 2, -4, -5, 3]
-print(l)
-print(highest_product0(l))
-print(highest_product1(l))
-print()
-
-l = [-10, -10, 1, 3, 2]
-print(l)
-print(highest_product0(l))
-print(highest_product1(l))
-print()
+if __name__ == "__main__":
+    # # unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestHighestProduct)
+    unittest.TextTestRunner(verbosity=2).run(suite)
