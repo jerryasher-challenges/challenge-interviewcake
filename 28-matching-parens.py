@@ -87,6 +87,6 @@ class TestMatchingParens(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    # # unittest.main()
+    # unittest.main()
     suite = unittest.TestLoader().loadTestsFromTestCase(TestMatchingParens)
     unittest.TextTestRunner(verbosity=2).run(suite)
