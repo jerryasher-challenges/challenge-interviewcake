@@ -1,5 +1,6 @@
 #!python
 
+######################################################################
 # this problem is from
 # https://www.interviewcake.com/question/second-largest-item-in-bst
 
@@ -7,8 +8,9 @@
 
 # Here are two implementations:
 # 1: the "obvious" that sorts the tree and pulls out penultimate
-# 2: that exploits knowledge of structure of a binary search tree
+# 2: and one that exploits knowledge of structure of a binary search tree
 #    to find the two possible locations the penultimate might be at
+######################################################################
 
 import unittest
 
@@ -70,6 +72,10 @@ class BinaryTreeNode:
     # this version avoids sorting the tree
     # by exploiting a bit of knowledge about binary search trees
     # and quite frankly is inspired by a google search of the question
+    # this is one reason why "how would you do this..." interview
+    # questions should be answered "I would think about and I would
+    # google it".
+
     def second_largest2(self):
         """a sol'n that uses knowledge of binary trees to avoid sort"""
         n = 0
@@ -108,6 +114,8 @@ class BinaryTreeNode:
                 return None
         return None
 
+# now test
+
 
 class TestBinaryTreeNodes(unittest.TestCase):
 
@@ -135,7 +143,7 @@ class TestBinaryTreeNodes(unittest.TestCase):
                 soln, second,
                 "expected soln {} is not {}".format(soln, second))
 
-            # not test the quicker soln
+            # now test the quicker soln
             second2 = bt.second_largest2()
             print("  second_largest2 is %s" % second2)
             self.assertEqual(
@@ -182,4 +190,6 @@ def list_tree_to_BinaryTree(list_tree):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    # unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestBinaryTreeNodes)
+    unittest.TextTestRunner(verbosity=2).run(suite)
