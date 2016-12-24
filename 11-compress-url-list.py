@@ -40,7 +40,7 @@
 # trie using a large organized cluster of organized clusters of
 # dictionaries.
 
-#########################
+######################################################################
 # Let's make visited a nested dictionary where each map has keys of just
 # one character. So we would store 'google.com' as
 # visited['g']['o']['o']['g']['l']['e']['.']['c']['o']['m']['*'] = True.
@@ -50,7 +50,7 @@
 # just prefixes. In the example above, 'google.co' is a prefix that we
 # might think is a visited URL if we didn't have some way to mark 'this
 # is the end of an entry.'
-###################################
+######################################################################
 
 # interviewake suggests this is not the be all and end all of trie
 # implementations, but it's what it's going with.
@@ -78,6 +78,8 @@
 # optimize prematurely, or in its strong form, "Premature optimization
 # is the root of all evil." -- Donald Knith. In this question, it's
 # pretty clear interviewcake optimized too soon.
+
+# so here we go
 
 from __future__ import print_function
 from sys import getsizeof, stderr
@@ -172,10 +174,7 @@ class WordGenerator:
 # to measure the memory, we'll use a "recipe" from ActiveState
 # from https://code.activestate.com/recipes/577504/
 # recursive version of getsizeof
-
-# (I wasn't sure if that recipe worked, so then I created my own
-# simpler version of it, but they are pretty much doing the same
-# thing.)
+#
 
 
 class TestTrieVsHash(unittest.TestCase):
