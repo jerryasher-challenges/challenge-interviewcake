@@ -41,7 +41,7 @@ def permute(string):
 
     return set(all_permutations)
 
-    # And now the tests
+# And now the tests
 
 
 class TestStringPermutations(unittest.TestCase):
@@ -64,9 +64,12 @@ class TestStringPermutations(unittest.TestCase):
         for string, soln in tests:
             soln_set = set(soln)
             permutation_set = permute(string)
+            print("\npermutation of '%s' is %s" %
+                  (string, permutation_set), end="")
             self.assertEqual(soln_set, permutation_set,
                              "permutations of '%s' should be %s but are %s" %
                              (string, soln_set, permutation_set))
+        print("")
 
 
 if __name__ == "__main__":
