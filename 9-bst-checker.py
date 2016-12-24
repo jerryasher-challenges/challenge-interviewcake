@@ -1,5 +1,6 @@
 #!python
 
+######################################################################
 # this problem is from
 # https://www.interviewcake.com/question/bst-checker
 
@@ -51,7 +52,9 @@
 # BSTs are useful for quick lookups. If the tree is balanced, we can
 # search for a given value in the tree in O(\lg{n})O(lgn) time.
 
-# ------------------------------
+######################################################################
+
+# Now my turn
 
 import unittest
 
@@ -123,6 +126,8 @@ class BinaryTreeNode:
             "", lmax, self.value, rmin, width=depth))
         return self.value, nmin, nmax
 
+# now test
+
 
 class TestBinaryTreeNodes(unittest.TestCase):
 
@@ -177,8 +182,8 @@ class TestBinaryTreeNodes(unittest.TestCase):
 # list_tree
 
 # however, interviewcake prefers a more java/c traditional
-# [node, ptr_left, ptr_right] structure so I have added a few routines
-# that let me create testcases using lisplike trees and then
+# [node, ptr_left, ptr_right] structure so I have added a routine
+# that lets me create testcases using lisplike trees and then
 # converting them to ptrful trees.
 
 # a helper fn to convert from my preferred lisp list_tree format
@@ -209,4 +214,6 @@ def list_tree_to_BinaryTree(list_tree):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    # unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestBinaryTreeNodes)
+    unittest.TextTestRunner(verbosity=2).run(suite)
