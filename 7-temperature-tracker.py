@@ -1,5 +1,7 @@
 #!python
 
+######################################################################
+# this problem is from
 # from https://www.interviewcake.com/question/python/temperature-tracker
 
 # You decide to test if your oddly-mathematical heating company is
@@ -24,6 +26,9 @@
 # assume they'll all be in the range 0..110
 #
 # If there is more than one mode, return any of the modes.
+######################################################################
+
+# Now my turn
 
 
 import unittest
@@ -119,4 +124,6 @@ class TestTempTracker(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    # unittest.main()
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestTempTracker)
+    unittest.TextTestRunner(verbosity=2).run(suite)

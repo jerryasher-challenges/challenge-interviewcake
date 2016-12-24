@@ -1,5 +1,6 @@
 #!python
 
+######################################################################
 # this problem is from
 # https://www.interviewcake.com/question/python/balanced-binary-tree
 
@@ -9,10 +10,15 @@
 # A tree is "superbalanced" if the difference between the depths of any
 # two leaf nodes is no greater than one.
 
+######################################################################
+
+# Now my turn
+
 import unittest
 
-
 # Here's a sample binary tree node class:
+
+
 class BinaryTreeNode:
 
     def __init__(self, value):
@@ -189,7 +195,7 @@ class TestBinaryTreeNodes(unittest.TestCase):
 # list_tree
 
 # however, interviewcake prefers a more java/c traditional
-# [node, ptr_left, ptr_right] structure so I have added a few routines
+# [node, ptr_left, ptr_right] structure so I have added a routine
 # that let me create testcases using lisplike trees and then
 # converting them to ptrful trees.
 
