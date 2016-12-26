@@ -62,8 +62,10 @@ def is_first_riffle(deck):
                 return False
     return True
 
-# heh. first has little to do with the problem statement, which I now
-# realize is about singly riffling a cut, shuffled deck.
+# heh. is_first_riffle has little to do with the problem statement,
+# which I now realize is about singly riffling a cut, shuffled deck.
+
+# try again...
 
 # let's write a function to tell us if a full deck of cards
 # shuffled_deck is a single riffle of two other halves half1 and
@@ -104,51 +106,11 @@ def is_single_riffle2(half1, half2, shuffled_deck):
     for card in shuffled_deck:
         if h1 < len(half1) and card == half1[h1]:
             h1 += 1
-            continue
         elif h2 < len(half2) and card == half2[h2]:
             h2 += 1
-            continue
-        return False
+        else:
+            return False
     return True
-
-
-# helpers
-
-
-def first_riffle(num_cards=ncards):
-    """return a single riffled deck of cards"""
-    split = random.randrange(2, ncards - 1)
-    h1 = []
-    for i in range(1, split):
-        h1.append(i)
-
-    h2 = []
-    for i in range(split, ncards + 1):
-        h2.append(i)
-
-    return h1, h2, shuffle(h1, h2, 3)
-
-
-def shuffle(h1, h2, maxcards=3):
-    """shuffles two decks, with at most, maxcards in a row from a single deck"""
-    deck = []
-    maxcards += 1
-    while((len(h1) > 0) or (len(h2) > 0)):
-
-        h1cards = random.randrange(1, maxcards)
-        h1cards = min(h1cards, len(h1))
-        h1slice = h1[0:h1cards]
-        h1 = h1[h1cards:]
-
-        h2cards = random.randrange(1, maxcards)
-        h2cards = min(h2cards, len(h2))
-        h2slice = h2[0:h2cards]
-        h2 = h2[h2cards:]
-
-        deck.extend(h1slice)
-        deck.extend(h2slice)
-
-    return deck
 
 
 # now test
@@ -156,10 +118,46 @@ def shuffle(h1, h2, maxcards=3):
 
 class TestSingleRiffleCheck(unittest.TestCase):
 
+    # throw away test helpers
+
+    def first_riffle(self, num_cards=ncards):
+        """return a single riffled deck of cards"""
+        split = random.randrange(2, ncards - 1)
+        h1 = []
+        for i in range(1, split):
+            h1.append(i)
+
+        h2 = []
+        for i in range(split, ncards + 1):
+            h2.append(i)
+
+        return h1, h2, self.shuffle(h1, h2, 3)
+
+    def shuffle(self, h1, h2, maxcards=3):
+        """shuffles two decks, with at most, maxcards in a row from a single deck"""
+        deck = []
+        maxcards += 1
+        while((len(h1) > 0) or (len(h2) > 0)):
+
+            h1cards = random.randrange(1, maxcards)
+            h1cards = min(h1cards, len(h1))
+            h1slice = h1[0:h1cards]
+            h1 = h1[h1cards:]
+
+            h2cards = random.randrange(1, maxcards)
+            h2cards = min(h2cards, len(h2))
+            h2slice = h2[0:h2cards]
+            h2 = h2[h2cards:]
+
+            deck.extend(h1slice)
+            deck.extend(h2slice)
+
+        return deck
+
     def test_1good_riffles(self):
         """test good riffles"""
 
-        h1, h2, deck = first_riffle()
+        h1, h2, deck = self.first_riffle()
         print("")
         print("h1: %s" % h1)
         print("h2: %s" % h2)
@@ -168,7 +166,7 @@ class TestSingleRiffleCheck(unittest.TestCase):
         self.assertTrue(is_single_riffle2(h1, h2, deck),
                         "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
 
-        deck = shuffle(h1, h2)
+        deck = self.shuffle(h1, h2)
         print("deck: %s" % deck)
         self.assertTrue(is_single_riffle(h1, h2, deck),
                         "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
@@ -177,13 +175,13 @@ class TestSingleRiffleCheck(unittest.TestCase):
 
     def test_2ngood_riffles(self):
         for i in range(100):
-            h1, h2, deck = first_riffle()
+            h1, h2, deck = self.first_riffle()
             self.assertTrue(is_single_riffle(h1, h2, deck),
                             "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
             self.assertTrue(is_single_riffle2(h1, h2, deck),
                             "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
 
-            deck = shuffle(h1, h2)
+            deck = self.shuffle(h1, h2)
             self.assertTrue(is_single_riffle(h1, h2, deck),
                             "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
             self.assertTrue(is_single_riffle2(h1, h2, deck),
@@ -191,13 +189,13 @@ class TestSingleRiffleCheck(unittest.TestCase):
 
     def test_3nbad_riffles(self):
         for i in range(100):
-            h1, h2, deck = first_riffle()
+            h1, h2, deck = self.first_riffle()
             self.assertTrue(is_single_riffle(h1, h2, deck),
                             "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
             self.assertTrue(is_single_riffle2(h1, h2, deck),
                             "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
 
-            deck = shuffle(h1, h2)
+            deck = self.shuffle(h1, h2)
             self.assertTrue(is_single_riffle(h1, h2, deck),
                             "\nh1 %s h2 %s\ndeck %s" % (h1, h2, deck))
             self.assertTrue(is_single_riffle2(h1, h2, deck),
