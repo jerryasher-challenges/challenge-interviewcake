@@ -34,18 +34,45 @@ def get_random(floor, ceiling):
     return random.randint(floor, ceiling)  # randint does this already
 
 
-def in_place_uniform_shuffle(deck):
-    """in place shuffle of a deck"""
+# this is interviewcake's non-uniform naive shuffle
+# stripped of comments, it differs from the in_place_uniform_shuffle
+# by 1 character. (A critical 1 character difference!)
 
-    n = len(deck)
+# using statistics in the unit tests, it can be seen that the naive
+# shuffle never converges on a uniform shuffling, empirically, the
+# variance can at times be seen to increase even with increasing
+# repetitions.
 
-    # sweep each position in turn marching up the deck
-    # (do not bother with the nth card, which would swap with itself)
+def naive_shuffle(the_list):
+    # for each index in the list
+
+    n = len(the_list)
+
     for i in xrange(0, n - 1):
-        # at each position put a card chosen from remainder of the deck
+
+        # grab a random other index
+        j = get_random(0, n - 1)
+
+        # and swap the values
+        the_list[i], the_list[j] = the_list[j], the_list[i]
+
+
+# the canonical shuffle in place algorithm
+
+
+def in_place_uniform_shuffle(the_list):
+    """in place shuffle of a the_list"""
+
+    n = len(the_list)
+
+    # sweep each position in turn marching up the the_list
+    # (do not bother with the nth element, which would swap with itself)
+    for i in xrange(0, n - 1):
+        # at each position of the_list put an element chosen from
+        # remainder of the the_list
         j = get_random(i, n - 1)
         # print("%s <--> %s" % (i, j))
-        deck[i], deck[j] = deck[j], deck[i]
+        the_list[i], the_list[j] = the_list[j], the_list[i]
 
 
 class TestShuffle(unittest.TestCase):
@@ -56,10 +83,10 @@ class TestShuffle(unittest.TestCase):
             for shuffle in [in_place_uniform_shuffle]:
                 print("")
                 print(shuffle.__name__)
-                deck = [card for card in xrange(i)]
-                print("deck was %s" % deck)
-                shuffle(deck)
-                print("     now %s" % deck)
+                the_list = [element for element in xrange(i)]
+                print("the_list was %s" % the_list)
+                shuffle(the_list)
+                print("     now %s" % the_list)
                 print("")
         self.assertTrue(True)
 
@@ -67,43 +94,48 @@ class TestShuffle(unittest.TestCase):
         """test to make sure this is a uniform shuffle"""
 
         # if this is a uniform shuffle, then after some bignum
-        # repetitions, we should see every card appear in every
-        # position of the deck, uniformly.
+        # repetitions, we should see every element appear in every
+        # position of the the_list, uniformly.
 
         # the average of 0..9 is 4.5
-        # if the cards are uniformly shuffled, over bignum repetitions
-        # at every position in the deck, the average of all cards
+        # if the elements are uniformly shuffled, over bignum repetitions
+        # at every position in the the_list, the average of all elements
         # shuffled into that position should be 4.5
 
-        print("")
+        for shuffle in [naive_shuffle, in_place_uniform_shuffle]:
 
-        ncards = 10
-        for i in [1, 5, 10, 100, 1000, 10000]:
-            count = [0 for card in range(ncards)]
-            for trial in range(i):
-                deck = [card for card in range(ncards)]
-                in_place_uniform_shuffle(deck)
-                for index in range(ncards):
-                    count[index] += deck[index]
+            print("\n\n%s\n" % shuffle.__name__)
 
-            print("% i shuffles" % i)
-            print("      counts % s" % count)
-            average = [count[index] / float(i) for index in range(ncards)]
-            print("    averages %s" % average)
+            n = 10
+            for trials in [1, 5, 10, 100, 1000, 10000]:
+                count = [0 for i in range(n)]
+                for trial in range(trials):
+                    the_list = [i for i in range(n)]
+                    shuffle(the_list)
+                    for i in range(n):
+                        count[i] += the_list[i]
 
-            total = sum(average)
-            mean = total / float(ncards)
-            variance = sum([(average[index] - mean) ** 2
-                            for index in range(ncards)])
-            variance = variance / (index**0.5)
-            stddev = variance**0.5
+                print("%s shuffles" % trials)
+                print("      counts % s" % count)
+                average = [count[i] / float(trials) for i in range(n)]
+                print("    averages %s" % average)
 
-            print("        mean %s   variance %.6s   standard deviation %.6s"
-                  % (mean, variance, stddev))
+                total = sum(average)
+                mean = total / float(n)
+                sq_diffs = [(average[i] - mean) ** 2 for i in range(n)]
+                variance = sum(sq_diffs) / n
+                stddev = variance**0.5
 
-        # the test of uniformity has shuffled the deck 10000 times and
-        # computes the averages of all the cards at each position, and
-        # ensures standard deviation of the averages is close to zero
+                print("        mean %s   variance %.6s   standard deviation %.6s"
+                      % (mean, variance, stddev))
+
+        # leaving the above loop, the last trial was of 10000 shuffles
+        # using the in place uniform shuffle
+
+        # the test of uniformity has shuffled the the_list 10000 times
+        # and computes the averages of all the elements shuffled into
+        # each position, and ensures standard deviation of the
+        # averages is close to zero
 
         self.assertAlmostEqual(stddev, 0, delta=0.1)
 
