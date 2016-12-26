@@ -6,10 +6,10 @@ import unittest
 
 ######################################################################
 # this problem is from
-# https://www.interviewcake.com/question/python/find-duplicate-optimize-for-space
+# https://www.interviewcake.com/question/python/find-duplicate-optimize-for-space-beast-mode
 #
 
-# Find a duplicate, Space Edition.
+# Find a duplicate, Space Edition BEAST MODE
 
 # We have a list of integers, where:
 
