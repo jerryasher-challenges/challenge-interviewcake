@@ -1,8 +1,6 @@
 This is my take on interview cake's questions.
 
-Most of this has been done in Python 2.
-
-About 1/2 the way in, and I like cake's questions, and the format. They are good review material in most cases, and in other cases, showing me things that I missed  during my CS degree.
+I like most of cake's questions, and the format. They are good review material in most cases, and at other times introduce me to topics I had missed.
 
 As usual with interview questions there are inevitably the questions where you either see the solution (or have seen the solution before) or will just never get what the interviewer is asking for.
 
@@ -16,7 +14,9 @@ If I can do a couple of these in a day, by myself, I'm pretty good with that.
 
 So here are some code snippets to look at, play with, evaluate.
 
-Most of the files here can be run by typing:
+The code was tested in Python 2, though it was written such that it will  probably work as is in Python 3.
+
+The files here can be run by typing:
 
     python filename
 
@@ -31,3 +31,4 @@ you should type
 to see the details
 
 
+A few of the interview cake questions are indeed interview questions and not amenable to coding solutions. This repo contains only the coding.
