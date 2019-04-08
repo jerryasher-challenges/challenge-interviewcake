@@ -1,4 +1,4 @@
-This is my take on [interview cake's questions](https://www.interviewcake.com).
+This is my take on [interview cake's questions](https://www.interviewcake.com/table-of-contents).
 
 I like most of cake's questions, and the format. They are good review material in most cases, and at other times introduce me to topics I had missed.
 
